@@ -19,6 +19,19 @@ Greška 401 ako kredencijali nisu ispravni.
 
 ---
 
+## Profil
+
+### GET /api/users/me
+Vraća profil ulogovanog korisnika.
+Odgovor 200: `{ "id", "email", "displayName", "identityStatement", "createdAt" }`
+
+### PUT /api/users/me
+Ažurira `displayName`/`identityStatement` (npr. iz Onboarding toka).
+Telo: `{ "displayName", "identityStatement" }`
+Odgovor 200: isti oblik kao GET.
+
+---
+
 ## Navike
 
 ### GET /api/habits

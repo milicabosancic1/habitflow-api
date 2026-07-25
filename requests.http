@@ -37,6 +37,20 @@ Authorization: Bearer <TOKEN>
 GET http://localhost:8080/api/habits
 Authorization: Bearer <TOKEN>
 
+### Moj profil
+GET http://localhost:8080/api/users/me
+Authorization: Bearer <TOKEN>
+
+### Izmena profila (npr. Onboarding)
+PUT http://localhost:8080/api/users/me
+Content-Type: application/json
+Authorization: Bearer <TOKEN>
+
+{
+  "displayName": "Ana",
+  "identityStatement": "Želim da postanem osoba koja čita svaki dan"
+}
+
 ### Beleženje izvršenja
 POST http://localhost:8080/api/entries
 Content-Type: application/json

@@ -12,8 +12,8 @@ Spring Security + JWT · Flyway · Maven
 ## Pokretanje
 
 ### Preduslovi
-- Java 17+ (imaš i noviju, radi)
-- Maven (ili samo otvori u IntelliJ IDEA / VS Code koji ga prepoznaju sami)
+- Java 17+ 
+- Maven 
 - PostgreSQL (ILI koristi ugrađeni H2 profil — vidi dole)
 
 ### Opcija A — Brzi start BEZ PostgreSQL-a (H2 in-memory)
@@ -75,8 +75,3 @@ Detaljno u `docs/api-spec.md`.
 - `GET/POST /api/entries`
 - `POST /api/sync` — batch sinhronizacija (offline-first)
 - `GET /api/recommendations`, `POST /api/recommendations/{id}/dismiss`
-
-## Napomene za dalji razvoj (vidi docs/tasks.md)
-Ovo pokriva Fazu 3 (backend osnove) i Fazu 4 (sync endpoint).
-Preporuke (Faza 5) se primarno generišu na Androidu; ovde postoji servis za
-čuvanje i serviranje preporuka.

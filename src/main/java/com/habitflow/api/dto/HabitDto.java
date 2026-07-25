@@ -2,15 +2,30 @@ package com.habitflow.api.dto;
 
 import com.habitflow.api.entity.FrequencyType;
 import com.habitflow.api.entity.HabitType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 public class HabitDto {
     private String id;
+
+    @NotBlank(message = "Naziv navike je obavezan")
     private String name;
+
     private String category;
+
+    @NotNull(message = "Tip navike je obavezan")
     private HabitType type;
+
+    @NotNull(message = "Tip frekvencije je obavezan")
     private FrequencyType frequencyType;
+
     private String daysOfWeek;
+
+    @NotNull(message = "Ciljna vrednost je obavezna")
+    @Positive(message = "Ciljna vrednost mora biti pozitivan broj")
     private Integer targetCount;
+
     private String reminderTime;
     private String cueText;
     private String stackedAfterHabitId;

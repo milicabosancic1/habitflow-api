@@ -3,6 +3,7 @@ package com.habitflow.api.controller;
 import com.habitflow.api.dto.HabitEntryDto;
 import com.habitflow.api.security.CurrentUser;
 import com.habitflow.api.service.HabitEntryService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class HabitEntryController {
     }
 
     @PostMapping
-    public HabitEntryDto record(@RequestBody HabitEntryDto dto) {
+    public HabitEntryDto record(@Valid @RequestBody HabitEntryDto dto) {
         return entryService.record(CurrentUser.id(), dto);
     }
 }

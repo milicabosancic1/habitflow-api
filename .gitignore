@@ -1,0 +1,27 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+.settings/
+.project
+.classpath
+
+*.log
+.DS_Store
+
+# Nikad ne commit-uj prave tajne/kredencijale
+application-prod.yml
+.env
+
+# interni planovi
+docs/tasks.md
+docs/recommendations.md
+CLAUDE.md
+

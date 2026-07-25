@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: habitflow-api
+  profiles:
+    active: dev
+
+app:
+  jwt:
+    # U produkciji OBAVEZNO preko environment varijable! Ovo je samo podrazumevana dev vrednost.
+    secret: ${JWT_SECRET:promeni-ovu-tajnu-na-nesto-dugacko-i-nasumicno-min-32-karaktera}
+    expiration-ms: ${JWT_EXPIRATION_MS:604800000} # 7 dana

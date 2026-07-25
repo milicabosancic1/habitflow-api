@@ -1,0 +1,17 @@
+# Primer produkcione konfiguracije. Kopiraj u application-prod.yml i popuni,
+# ili (bolje) koristi environment varijable.
+spring:
+  datasource:
+    url: jdbc:postgresql://HOST:5432/habitflow
+    username: KORISNIK
+    password: LOZINKA
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+
+app:
+  jwt:
+    secret: DUGACKA_NASUMICNA_TAJNA_MIN_32_KARAKTERA
+    expiration-ms: 604800000

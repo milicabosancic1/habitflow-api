@@ -1,4 +1,4 @@
-# Profil za brzo pokretanje bez PostgreSQL-a (npr. prvi test da sve radi).
+# Profil za brzo pokretanje bez PostgreSQL-a 
 # Pokreni sa: --spring.profiles.active=dev-h2
 spring:
   datasource:
@@ -16,3 +16,11 @@ spring:
       path: /h2-console
   flyway:
     enabled: false
+
+app:
+  security:
+    rate-limit:
+      # H2 profil je za brzi lokalni razvoj/testiranje — visok limit da ne smeta
+      # ponovljenim pozivima iz requests.http ili test paketa.
+      capacity: 1000
+      refill-seconds: 60

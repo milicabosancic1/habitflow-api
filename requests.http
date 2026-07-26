@@ -9,13 +9,29 @@ Content-Type: application/json
   "identityStatement": "Želim da postanem osoba koja čita svaki dan"
 }
 
-### Prijava (sačuvaj token iz odgovora)
+### Prijava (sačuvaj token i refreshToken iz odgovora)
 POST http://localhost:8080/api/auth/login
 Content-Type: application/json
 
 {
   "email": "ana@primer.com",
   "password": "tajna123"
+}
+
+### Osvežavanje tokena (zameni <REFRESH_TOKEN>; stari se opoziva - koristi novi iz odgovora)
+POST http://localhost:8080/api/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "<REFRESH_TOKEN>"
+}
+
+### Odjava (opoziva samo ovu sesiju)
+POST http://localhost:8080/api/auth/logout
+Content-Type: application/json
+
+{
+  "refreshToken": "<REFRESH_TOKEN>"
 }
 
 ### Kreiranje navike (zameni <TOKEN>)

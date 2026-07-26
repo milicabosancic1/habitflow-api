@@ -8,4 +8,9 @@ app:
   jwt:
     # U produkciji OBAVEZNO preko environment varijable! Ovo je samo podrazumevana dev vrednost.
     secret: ${JWT_SECRET:promeni-ovu-tajnu-na-nesto-dugacko-i-nasumicno-min-32-karaktera}
-    expiration-ms: ${JWT_EXPIRATION_MS:604800000} # 7 dana
+    access-expiration-ms: ${JWT_ACCESS_EXPIRATION_MS:900000}        # 15 min
+    refresh-expiration-ms: ${JWT_REFRESH_EXPIRATION_MS:2592000000}  # 30 dana
+  security:
+    rate-limit:
+      capacity: ${RATE_LIMIT_CAPACITY:5}          # max pokusaja
+      refill-seconds: ${RATE_LIMIT_REFILL_SECONDS:60} # po vremenskom prozoru (sekunde)

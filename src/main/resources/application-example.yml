@@ -14,4 +14,9 @@ spring:
 app:
   jwt:
     secret: DUGACKA_NASUMICNA_TAJNA_MIN_32_KARAKTERA
-    expiration-ms: 604800000
+    access-expiration-ms: 900000       # 15 min
+    refresh-expiration-ms: 2592000000  # 30 dana
+  security:
+    rate-limit:
+      capacity: 5
+      refill-seconds: 60

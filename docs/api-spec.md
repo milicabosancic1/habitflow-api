@@ -8,14 +8,33 @@ Vremenske oznake: epoch milisekunde (Long). Datumi: `YYYY-MM-DD`.
 
 ## Autentikacija
 
+Access token (`token`) je kratkotrajan JWT (podrazumevano 15 min) koji se šalje u
+`Authorization: Bearer <token>` header-u. Refresh token je dugotrajan (30 dana),
+opaque string koji se čuva bezbedno na klijentu i koristi samo za `/api/auth/refresh`.
+
 ### POST /api/auth/register
 Telo: `{ "email", "password", "displayName", "identityStatement" }`
-Odgovor 201: `{ "userId", "token" }`
+Odgovor 201: `{ "userId", "token", "refreshToken", "displayName" }`
 
 ### POST /api/auth/login
 Telo: `{ "email", "password" }`
-Odgovor 200: `{ "userId", "token", "displayName" }`
+Odgovor 200: `{ "userId", "token", "refreshToken", "displayName" }`
 Greška 401 ako kredencijali nisu ispravni.
+
+### POST /api/auth/refresh
+Telo: `{ "refreshToken" }`
+Odgovor 200: isti oblik kao login (novi `token` + novi `refreshToken` — rotacija,
+stari refresh token se odmah opoziva).
+Greška 401 ako je refresh token nevažeći, istekao ili već iskorišćen/opozvan.
+
+### POST /api/auth/logout
+Telo: `{ "refreshToken" }`
+Odgovor 204. Opoziva samo tu sesiju/uređaj (ostale prijave korisnika ostaju aktivne).
+
+### Rate limiting
+`/api/auth/login` i `/api/auth/register` su ograničeni po IP adresi (podrazumevano
+5 pokušaja / 60s) kao zaštita od brute-force napada. Prekoračenje vraća `429 Too
+Many Requests` u istom formatu greške kao ostale greške.
 
 ---
 

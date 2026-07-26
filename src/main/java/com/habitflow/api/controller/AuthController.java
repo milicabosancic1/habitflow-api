@@ -2,6 +2,7 @@ package com.habitflow.api.controller;
 
 import com.habitflow.api.dto.AuthResponse;
 import com.habitflow.api.dto.LoginRequest;
+import com.habitflow.api.dto.RefreshRequest;
 import com.habitflow.api.dto.RegisterRequest;
 import com.habitflow.api.service.AuthService;
 import jakarta.validation.Valid;
@@ -27,5 +28,16 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest req) {
         return ResponseEntity.ok(authService.login(req));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<AuthResponse> refresh(@Valid @RequestBody RefreshRequest req) {
+        return ResponseEntity.ok(authService.refresh(req.getRefreshToken()));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(@Valid @RequestBody RefreshRequest req) {
+        authService.logout(req.getRefreshToken());
+        return ResponseEntity.noContent().build();
     }
 }

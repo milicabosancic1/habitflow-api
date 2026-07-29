@@ -18,6 +18,14 @@ Content-Type: application/json
   "password": "tajna123"
 }
 
+### Google login (idToken dobijas od Google Sign-In SDK-a na Androidu)
+POST http://localhost:8080/api/auth/google
+Content-Type: application/json
+
+{
+  "idToken": "<GOOGLE_ID_TOKEN>"
+}
+
 ### Osvežavanje tokena (zameni <REFRESH_TOKEN>; stari se opoziva - koristi novi iz odgovora)
 POST http://localhost:8080/api/auth/refresh
 Content-Type: application/json

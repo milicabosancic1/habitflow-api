@@ -14,7 +14,10 @@ public class User {
     private String email;
 
     @Column(name = "password_hash")
-    private String passwordHash;
+    private String passwordHash; // null za naloge kreirane samo preko Google Sign-In
+
+    @Column(name = "google_id", unique = true)
+    private String googleId;
 
     @Column(name = "display_name")
     private String displayName;
@@ -35,6 +38,9 @@ public class User {
 
     public String getPasswordHash() { return passwordHash; }
     public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
+
+    public String getGoogleId() { return googleId; }
+    public void setGoogleId(String googleId) { this.googleId = googleId; }
 
     public String getDisplayName() { return displayName; }
     public void setDisplayName(String displayName) { this.displayName = displayName; }

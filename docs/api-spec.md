@@ -21,6 +21,17 @@ Telo: `{ "email", "password" }`
 Odgovor 200: `{ "userId", "token", "refreshToken", "displayName" }`
 Greška 401 ako kredencijali nisu ispravni.
 
+### POST /api/auth/google
+Prijava/registracija preko Google Sign-In. Android SDK vraća ID token nakon
+Google login-a na uređaju; taj token se šalje ovde i verifikuje na serveru
+(potpis, izdavalac, audience == GOOGLE_CLIENT_ID).
+Telo: `{ "idToken" }`
+Odgovor 200: isti oblik kao login. Ako korisnik sa tim email-om već postoji
+(registrovan preko email/lozinke), Google nalog se automatski povezuje (linkuje)
+sa postojećim nalogom — lozinka ostaje netaknuta, korisnik i dalje može da se
+loguje na oba načina.
+Greška 401 ako je token nevažeći ili Google email nije verifikovan.
+
 ### POST /api/auth/refresh
 Telo: `{ "refreshToken" }`
 Odgovor 200: isti oblik kao login (novi `token` + novi `refreshToken` — rotacija,
@@ -32,9 +43,9 @@ Telo: `{ "refreshToken" }`
 Odgovor 204. Opoziva samo tu sesiju/uređaj (ostale prijave korisnika ostaju aktivne).
 
 ### Rate limiting
-`/api/auth/login` i `/api/auth/register` su ograničeni po IP adresi (podrazumevano
-5 pokušaja / 60s) kao zaštita od brute-force napada. Prekoračenje vraća `429 Too
-Many Requests` u istom formatu greške kao ostale greške.
+`/api/auth/login`, `/api/auth/register` i `/api/auth/google` su ograničeni po IP
+adresi (podrazumevano 5 pokušaja / 60s) kao zaštita od brute-force napada.
+Prekoračenje vraća `429 Too Many Requests` u istom formatu greške kao ostale greške.
 
 ---
 

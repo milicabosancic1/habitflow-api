@@ -14,3 +14,10 @@ app:
     rate-limit:
       capacity: ${RATE_LIMIT_CAPACITY:5}          # max pokusaja
       refill-seconds: ${RATE_LIMIT_REFILL_SECONDS:60} # po vremenskom prozoru (sekunde)
+  google:
+    # Web OAuth Client ID iz Google Cloud Console (ne Android client ID) —
+    # Android SDK mora traziti ID token sa ovim kao serverClientId.
+    # Napomena: Client ID NIJE tajna (Google ga namerno pravi javnim, ugradjuje
+    # se i u APK), za razliku od "client secret" koji se ovde uopste ne koristi
+    # — zato je bezbedno da podrazumevana vrednost bude u repozitorijumu.
+    client-id: ${GOOGLE_CLIENT_ID:485435476146-vr7aj1st6jlej7735m90kk6ofnj4m0r5.apps.googleusercontent.com}

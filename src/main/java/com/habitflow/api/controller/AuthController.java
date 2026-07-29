@@ -1,6 +1,7 @@
 package com.habitflow.api.controller;
 
 import com.habitflow.api.dto.AuthResponse;
+import com.habitflow.api.dto.GoogleAuthRequest;
 import com.habitflow.api.dto.LoginRequest;
 import com.habitflow.api.dto.RefreshRequest;
 import com.habitflow.api.dto.RegisterRequest;
@@ -28,6 +29,11 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest req) {
         return ResponseEntity.ok(authService.login(req));
+    }
+
+    @PostMapping("/google")
+    public ResponseEntity<AuthResponse> google(@Valid @RequestBody GoogleAuthRequest req) {
+        return ResponseEntity.ok(authService.loginWithGoogle(req.getIdToken()));
     }
 
     @PostMapping("/refresh")

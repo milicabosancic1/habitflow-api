@@ -20,3 +20,5 @@ app:
     rate-limit:
       capacity: 5
       refill-seconds: 60
+  google:
+    client-id: TVOJ_GOOGLE_WEB_CLIENT_ID.apps.googleusercontent.com

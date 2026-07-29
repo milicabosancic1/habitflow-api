@@ -24,7 +24,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class RateLimitFilter extends OncePerRequestFilter {
 
-    private static final Set<String> LIMITED_PATHS = Set.of("/api/auth/login", "/api/auth/register");
+    private static final Set<String> LIMITED_PATHS = Set.of(
+            "/api/auth/login", "/api/auth/register", "/api/auth/google");
 
     private final int capacity;
     private final Duration refillPeriod;

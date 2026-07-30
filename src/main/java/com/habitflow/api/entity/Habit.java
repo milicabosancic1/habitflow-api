@@ -30,6 +30,15 @@ public class Habit {
     @Column(name = "target_count")
     private Integer targetCount;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tracking_type", nullable = false)
+    private TrackingType trackingType = TrackingType.SIMPLE;
+
+    private String unit; // npr. "ml", "koraka" — null za SIMPLE
+
+    @Column(name = "increment_amount")
+    private Integer incrementAmount; // samo za QUANTITY — null inace
+
     @Column(name = "reminder_time")
     private String reminderTime;
 
@@ -73,6 +82,15 @@ public class Habit {
 
     public Integer getTargetCount() { return targetCount; }
     public void setTargetCount(Integer targetCount) { this.targetCount = targetCount; }
+
+    public TrackingType getTrackingType() { return trackingType; }
+    public void setTrackingType(TrackingType trackingType) { this.trackingType = trackingType; }
+
+    public String getUnit() { return unit; }
+    public void setUnit(String unit) { this.unit = unit; }
+
+    public Integer getIncrementAmount() { return incrementAmount; }
+    public void setIncrementAmount(Integer incrementAmount) { this.incrementAmount = incrementAmount; }
 
     public String getReminderTime() { return reminderTime; }
     public void setReminderTime(String reminderTime) { this.reminderTime = reminderTime; }

@@ -16,6 +16,9 @@ public class HabitMapper {
         d.setFrequencyType(h.getFrequencyType());
         d.setDaysOfWeek(h.getDaysOfWeek());
         d.setTargetCount(h.getTargetCount());
+        d.setTrackingType(h.getTrackingType());
+        d.setUnit(h.getUnit());
+        d.setIncrementAmount(h.getIncrementAmount());
         d.setReminderTime(h.getReminderTime());
         d.setCueText(h.getCueText());
         d.setStackedAfterHabitId(h.getStackedAfterHabitId());
@@ -34,6 +37,9 @@ public class HabitMapper {
         h.setFrequencyType(d.getFrequencyType());
         h.setDaysOfWeek(d.getDaysOfWeek());
         h.setTargetCount(d.getTargetCount());
+        if (d.getTrackingType() != null) h.setTrackingType(d.getTrackingType());
+        h.setUnit(d.getUnit());
+        h.setIncrementAmount(d.getIncrementAmount());
         h.setReminderTime(d.getReminderTime());
         h.setCueText(d.getCueText());
         h.setStackedAfterHabitId(d.getStackedAfterHabitId());

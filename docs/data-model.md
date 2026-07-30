@@ -8,6 +8,7 @@ Nazivi polja dati su u camelCase (Kotlin/Java); u PostgreSQL koristiti snake_cas
 ## Enumeracije
 
 - **HabitType**: `BUILD` (izgradnja navike) | `QUIT` (eliminacija navike)
+- **TrackingType**: `SIMPLE` (jednim tapom) | `QUANTITY` (količina uz jedinicu, npr. ml) | `NUMERIC` (broj)
 - **FrequencyType**: `DAILY` | `SPECIFIC_DAYS` (određeni dani u nedelji) | `TIMES_PER_WEEK`
 - **EntryStatus**: `DONE` | `MISSED` | `PARTIAL`
 - **SyncStatus** (samo Android/Room): `SYNCED` | `PENDING` | `PENDING_DELETE`
@@ -22,7 +23,8 @@ Nazivi polja dati su u camelCase (Kotlin/Java); u PostgreSQL koristiti snake_cas
 |-------|-----|------|
 | id | UUID/String | Primarni ključ (generisan na klijentu, da radi offline) |
 | email | String (unique) | Email, može biti null za lokalni offline profil |
-| passwordHash | String | Samo na serveru (BCrypt). Ne čuva se na klijentu. |
+| passwordHash | String? | Samo na serveru (BCrypt). Null za naloge kreirane preko Google Sign-In. |
+| googleId | String? (unique) | Google "sub" claim — postoji ako je nalog povezan sa Google nalogom |
 | displayName | String | Prikazno ime |
 | identityStatement | String | „Želim da postanem osoba koja…" |
 | createdAt | Long (epoch ms) | Vreme kreiranja |
@@ -39,6 +41,9 @@ Nazivi polja dati su u camelCase (Kotlin/Java); u PostgreSQL koristiti snake_cas
 | frequencyType | FrequencyType | Kako se ponavlja |
 | daysOfWeek | String? | Za SPECIFIC_DAYS, npr. "MO,WE,FR" |
 | targetCount | Int | Ciljna vrednost (npr. broj puta / minuta) |
+| trackingType | TrackingType | SIMPLE / QUANTITY / NUMERIC (podrazumevano SIMPLE) |
+| unit | String? | npr. "ml", "koraka" — samo za QUANTITY |
+| incrementAmount | Int? | Korak uvećanja — samo za QUANTITY |
 | reminderTime | String? | HH:mm, lokalni podsetnik |
 | cueText | String? | „Nakon što __" (habit stacking okidač) |
 | stackedAfterHabitId | String? (FK → Habit) | Navika na koju se nadovezuje |

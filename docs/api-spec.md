@@ -146,6 +146,9 @@ Klijent primenjuje vraćene promene u Room i pomera svoj `since` na `serverTime`
   "frequencyType": "DAILY",
   "daysOfWeek": null,
   "targetCount": 1,
+  "trackingType": "SIMPLE",
+  "unit": null,
+  "incrementAmount": null,
   "reminderTime": "20:00",
   "cueText": "Nakon večere",
   "stackedAfterHabitId": null,
@@ -154,6 +157,10 @@ Klijent primenjuje vraćene promene u Room i pomera svoj `since` na `serverTime`
   "updatedAt": 1737000000000
 }
 ```
+`trackingType`: `SIMPLE` | `QUANTITY` | `NUMERIC`. `unit`/`incrementAmount` se koriste
+samo za `QUANTITY` (npr. `unit: "ml"`, `incrementAmount: 250`), inače su `null`.
+Ako klijent izostavi `trackingType` pri izmeni (PUT/sync), server zadržava postojeću
+vrednost umesto da je briše — nova navika bez ovog polja dobija `SIMPLE`.
 
 ### HabitEntryDto
 ```json

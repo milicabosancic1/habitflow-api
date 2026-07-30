@@ -57,6 +57,22 @@ Authorization: Bearer <TOKEN>
   "cueText": "Nakon večere"
 }
 
+### Kreiranje navike sa kolicinskim pracenjem (QUANTITY)
+POST http://localhost:8080/api/habits
+Content-Type: application/json
+Authorization: Bearer <TOKEN>
+
+{
+  "name": "Voda",
+  "category": "Zdravlje",
+  "type": "BUILD",
+  "frequencyType": "DAILY",
+  "targetCount": 2000,
+  "trackingType": "QUANTITY",
+  "unit": "ml",
+  "incrementAmount": 250
+}
+
 ### Sve navike
 GET http://localhost:8080/api/habits
 Authorization: Bearer <TOKEN>

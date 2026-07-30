@@ -2,6 +2,7 @@ package com.habitflow.api.dto;
 
 import com.habitflow.api.entity.FrequencyType;
 import com.habitflow.api.entity.HabitType;
+import com.habitflow.api.entity.TrackingType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -26,6 +27,10 @@ public class HabitDto {
     @Positive(message = "Ciljna vrednost mora biti pozitivan broj")
     private Integer targetCount;
 
+    private TrackingType trackingType; // null = zadrzi postojece/podrazumevano (SIMPLE)
+    private String unit;
+    private Integer incrementAmount;
+
     private String reminderTime;
     private String cueText;
     private String stackedAfterHabitId;
@@ -47,6 +52,12 @@ public class HabitDto {
     public void setDaysOfWeek(String daysOfWeek) { this.daysOfWeek = daysOfWeek; }
     public Integer getTargetCount() { return targetCount; }
     public void setTargetCount(Integer targetCount) { this.targetCount = targetCount; }
+    public TrackingType getTrackingType() { return trackingType; }
+    public void setTrackingType(TrackingType trackingType) { this.trackingType = trackingType; }
+    public String getUnit() { return unit; }
+    public void setUnit(String unit) { this.unit = unit; }
+    public Integer getIncrementAmount() { return incrementAmount; }
+    public void setIncrementAmount(Integer incrementAmount) { this.incrementAmount = incrementAmount; }
     public String getReminderTime() { return reminderTime; }
     public void setReminderTime(String reminderTime) { this.reminderTime = reminderTime; }
     public String getCueText() { return cueText; }

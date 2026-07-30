@@ -4,6 +4,7 @@ import com.habitflow.api.dto.HabitDto;
 import com.habitflow.api.dto.HabitEntryDto;
 import com.habitflow.api.dto.SyncRequest;
 import com.habitflow.api.entity.Habit;
+import com.habitflow.api.entity.TrackingType;
 import com.habitflow.api.mapper.HabitEntryMapper;
 import com.habitflow.api.mapper.HabitMapper;
 import com.habitflow.api.repository.HabitEntryRepository;
@@ -87,6 +88,61 @@ class SyncServiceTest {
         syncService.sync("user-1", req);
 
         verify(habitRepository, never()).save(any());
+    }
+
+    @Test
+    void newHabitWithTrackingFields_roundTripsThroughSync() {
+        when(habitRepository.findById("h2")).thenReturn(Optional.empty());
+
+        HabitDto incoming = new HabitDto();
+        incoming.setId("h2");
+        incoming.setName("Voda");
+        incoming.setTrackingType(TrackingType.QUANTITY);
+        incoming.setUnit("ml");
+        incoming.setIncrementAmount(250);
+        incoming.setUpdatedAt(100L);
+
+        SyncRequest req = new SyncRequest();
+        req.setSince(0L);
+        req.setHabits(List.of(incoming));
+        req.setEntries(List.of());
+
+        syncService.sync("user-1", req);
+
+        ArgumentCaptor<Habit> captor = ArgumentCaptor.forClass(Habit.class);
+        verify(habitRepository).save(captor.capture());
+        assertThat(captor.getValue().getTrackingType()).isEqualTo(TrackingType.QUANTITY);
+        assertThat(captor.getValue().getUnit()).isEqualTo("ml");
+        assertThat(captor.getValue().getIncrementAmount()).isEqualTo(250);
+    }
+
+    @Test
+    void updateWithoutTrackingType_keepsExistingValue() {
+        Habit existing = new Habit();
+        existing.setId("h3");
+        existing.setUserId("user-1");
+        existing.setTrackingType(TrackingType.QUANTITY);
+        existing.setUnit("ml");
+        existing.setUpdatedAt(100L);
+        when(habitRepository.findById("h3")).thenReturn(Optional.of(existing));
+
+        HabitDto incoming = new HabitDto(); // stariji Android klijent — trackingType nije poslat
+        incoming.setId("h3");
+        incoming.setName("Novo ime");
+        incoming.setUpdatedAt(200L);
+
+        SyncRequest req = new SyncRequest();
+        req.setSince(0L);
+        req.setHabits(List.of(incoming));
+        req.setEntries(List.of());
+
+        syncService.sync("user-1", req);
+
+        // trackingType je NOT NULL u bazi pa se stiti od gubitka vrednosti kad izostane iz DTO-a;
+        // unit/incrementAmount su nullable i ponasaju se kao ostala opciona polja (pun replace).
+        ArgumentCaptor<Habit> captor = ArgumentCaptor.forClass(Habit.class);
+        verify(habitRepository).save(captor.capture());
+        assertThat(captor.getValue().getTrackingType()).isEqualTo(TrackingType.QUANTITY);
     }
 
     @Test

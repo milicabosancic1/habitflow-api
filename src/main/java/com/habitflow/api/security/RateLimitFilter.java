@@ -24,6 +24,10 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class RateLimitFilter extends OncePerRequestFilter {
 
+    // Namerno ograničeno na auth rute (brute-force meta). Ostatak API-ja (sync, habits,
+    // entries...) zahteva važeći JWT pre nego što uopšte stigne do handlera, pa je rizik
+    // od credential-stuffing/spam napada tu bitno manji — dodavanje throttling-a svuda je
+    // van obima diplomskog rada, ali ostaje poznato ograničenje ako zatreba u produkciji.
     private static final Set<String> LIMITED_PATHS = Set.of(
             "/api/auth/login", "/api/auth/register", "/api/auth/google");
 

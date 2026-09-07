@@ -83,6 +83,21 @@ class AuthIntegrationTest {
     }
 
     @Test
+    void register_withPasswordOver72Chars_returns400() throws Exception {
+        // BCrypt tiho secce lozinku na 72 bajta - bez ove validacije bi ovakav zahtev
+        // prosao kao 201 i korisnik bi mislio da mu cela lozinka vazi.
+        var registerBody = Map.of(
+                "email", "predugacka-lozinka@habitflow.dev",
+                "password", "a".repeat(73),
+                "displayName", "Neko"
+        );
+        mockMvc.perform(post("/api/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json(registerBody)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void register_withDuplicateEmail_returns400() throws Exception {
         var registerBody = Map.of(
                 "email", "dup@habitflow.dev",

@@ -6,13 +6,16 @@ import com.habitflow.api.entity.TrackingType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 public class HabitDto {
     private String id;
 
     @NotBlank(message = "Naziv navike je obavezan")
+    @Size(max = 255, message = "Naziv navike je predugačak")
     private String name;
 
+    @Size(max = 255, message = "Kategorija je predugačka")
     private String category;
 
     @NotNull(message = "Tip navike je obavezan")
@@ -21,6 +24,7 @@ public class HabitDto {
     @NotNull(message = "Tip frekvencije je obavezan")
     private FrequencyType frequencyType;
 
+    @Size(max = 50, message = "daysOfWeek je predugačak")
     private String daysOfWeek;
 
     @NotNull(message = "Ciljna vrednost je obavezna")
@@ -28,11 +32,18 @@ public class HabitDto {
     private Integer targetCount;
 
     private TrackingType trackingType; // null = zadrzi postojece/podrazumevano (SIMPLE)
+
+    @Size(max = 50, message = "Jedinica je predugačka")
     private String unit;
     private Integer incrementAmount;
 
+    @Size(max = 10, message = "reminderTime je predugačak")
     private String reminderTime;
+
+    @Size(max = 500, message = "Cue tekst je predugačak")
     private String cueText;
+
+    @Size(max = 36, message = "stackedAfterHabitId nije validan ID")
     private String stackedAfterHabitId;
     private boolean archived;
     private Long createdAt;

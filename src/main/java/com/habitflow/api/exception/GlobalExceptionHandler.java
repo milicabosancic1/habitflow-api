@@ -1,5 +1,7 @@
 package com.habitflow.api.exception;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -11,6 +13,8 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     private Map<String, Object> body(HttpStatus status, String message) {
         Map<String, Object> m = new HashMap<>();
@@ -65,5 +69,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleGatewayTimeout(GatewayTimeoutException ex) {
         return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT)
                 .body(body(HttpStatus.GATEWAY_TIMEOUT, ex.getMessage()));
+    }
+
+    /** Fallback za sve neočekivane greške - i one moraju vratiti isti JSON format, ne goli stack trace. */
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, Object>> handleUnexpected(Exception ex) {
+        log.error("Neočekivana greška", ex);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(body(HttpStatus.INTERNAL_SERVER_ERROR, "Došlo je do neočekivane greške"));
     }
 }

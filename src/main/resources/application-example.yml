@@ -22,3 +22,8 @@ app:
       refill-seconds: 60
   google:
     client-id: TVOJ_GOOGLE_WEB_CLIENT_ID.apps.googleusercontent.com
+  ai:
+    anthropic:
+      api-key: TVOJ_ANTHROPIC_API_KEY
+      model: claude-haiku-4-5-20251001
+      timeout-ms: 9000

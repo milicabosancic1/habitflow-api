@@ -54,4 +54,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(body(HttpStatus.UNAUTHORIZED, ex.getMessage()));
     }
+
+    @ExceptionHandler(BadGatewayException.class)
+    public ResponseEntity<Map<String, Object>> handleBadGateway(BadGatewayException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+                .body(body(HttpStatus.BAD_GATEWAY, ex.getMessage()));
+    }
+
+    @ExceptionHandler(GatewayTimeoutException.class)
+    public ResponseEntity<Map<String, Object>> handleGatewayTimeout(GatewayTimeoutException ex) {
+        return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT)
+                .body(body(HttpStatus.GATEWAY_TIMEOUT, ex.getMessage()));
+    }
 }

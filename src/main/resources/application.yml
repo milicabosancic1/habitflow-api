@@ -21,3 +21,9 @@ app:
     # se i u APK), za razliku od "client secret" koji se ovde uopste ne koristi
     # — zato je bezbedno da podrazumevana vrednost bude u repozitorijumu.
     client-id: ${GOOGLE_CLIENT_ID:485435476146-vr7aj1st6jlej7735m90kk6ofnj4m0r5.apps.googleusercontent.com}
+  ai:
+    anthropic:
+      # LLM API kljuc ide ISKLJUCIVO preko environment varijable, nikad hardkodovan.
+      api-key: ${ANTHROPIC_API_KEY:}
+      model: ${ANTHROPIC_MODEL:claude-haiku-4-5-20251001}
+      timeout-ms: ${ANTHROPIC_TIMEOUT_MS:9000}

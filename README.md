@@ -32,6 +32,8 @@ API je na `http://localhost:8080`. H2 konzola: `http://localhost:8080/h2-console
    ```
 2. Postavi kredencijale (kopiraj `.env.example` u `.env` ili postavi env varijable):
    `DB_URL`, `DB_USER`, `DB_PASSWORD`, `JWT_SECRET`.
+   (Opciono: `ANTHROPIC_API_KEY` za `/api/ai/weekly-insight` — bez njega taj
+   endpoint samo vraća `502`, ostatak API-ja radi normalno.)
 3. Pokreni:
    ```bash
    mvn spring-boot:run
@@ -53,6 +55,10 @@ Pokreni `HabitFlowApiApplication`. Za H2 profil, dodaj u run konfiguraciju:
 Koristi `requests.http` (VS Code REST Client ili IntelliJ HTTP Client) — sadrži
 gotove pozive za registraciju, prijavu, kreiranje navike, itd.
 
+Ili kroz Swagger UI (živa dokumentacija, generisana iz koda):
+`http://localhost:8080/swagger-ui.html` — klikni "Authorize" i unesi
+`Bearer <TOKEN>` da testiraš zaštićene rute direktno iz browsera.
+
 ---
 
 ## Struktura
@@ -63,15 +69,21 @@ repository/  Spring Data JPA
 entity/      JPA entiteti
 dto/         DTO objekti
 mapper/      entitet <-> DTO
-security/    JWT, filter, config
+security/    JWT, filter, rate limiting
+config/      OpenAPI/Swagger, HTTP klijent za AI provajdera
 exception/   globalno rukovanje greškama
 resources/db/migration/  Flyway SQL migracije
 ```
 
 ## Glavni endpointi
-Detaljno u `docs/api-spec.md`.
-- `POST /api/auth/register`, `POST /api/auth/login`
+Detaljno u `docs/api-spec.md` (pun spisak i uživo u Swagger UI-ju, vidi gore).
+- `POST /api/auth/register`, `POST /api/auth/login`, `POST /api/auth/google`,
+  `POST /api/auth/refresh`, `POST /api/auth/logout`
 - `GET/POST /api/habits`, `PUT/DELETE /api/habits/{id}`
 - `GET/POST /api/entries`
 - `POST /api/sync` — batch sinhronizacija (offline-first)
 - `GET /api/recommendations`, `POST /api/recommendations/{id}/dismiss`
+- `GET/POST /api/achievements` — bedževi (unlock je idempotentan po tipu)
+- `POST /api/ai/weekly-insight` — opcioni personalizovani nedeljni uvid preko
+  Anthropic Claude-a (`docs/backend-ai-weekly-insight.md`); zahteva
+  `ANTHROPIC_API_KEY`, inače vraća `502` i Android tiho koristi fallback tekst

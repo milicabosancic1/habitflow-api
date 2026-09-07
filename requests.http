@@ -113,3 +113,39 @@ Authorization: Bearer <TOKEN>
   "habits": [],
   "entries": []
 }
+
+### Aktivne preporuke
+GET http://localhost:8080/api/recommendations
+Authorization: Bearer <TOKEN>
+
+### Odbacivanje preporuke (zameni <RECOMMENDATION_ID>)
+POST http://localhost:8080/api/recommendations/<RECOMMENDATION_ID>/dismiss
+Authorization: Bearer <TOKEN>
+
+### Otključana dostignuća
+GET http://localhost:8080/api/achievements
+Authorization: Bearer <TOKEN>
+
+### Prijava otključavanja dostignuća (idempotentno po tipu - ponovni poziv sa istim tipom vraća postojeći zapis umesto da pravi duplikat)
+POST http://localhost:8080/api/achievements
+Content-Type: application/json
+Authorization: Bearer <TOKEN>
+
+{
+  "type": "STREAK_7",
+  "unlockedAt": 1735689600000
+}
+
+### AI nedeljni uvid (opciono - ako ANTHROPIC_API_KEY nije podešen, vraća 502; Android strana u tom slučaju tiho koristi sopstveni fallback tekst)
+POST http://localhost:8080/api/ai/weekly-insight
+Content-Type: application/json
+Authorization: Bearer <TOKEN>
+
+{
+  "thisWeekPct": 82,
+  "lastWeekPct": 70,
+  "habits": [
+    { "habitName": "Trčanje", "category": "Zdravlje", "thisWeekPct": 90, "currentStreak": 5 },
+    { "habitName": "Čitanje", "category": "Učenje", "thisWeekPct": 60, "currentStreak": 0 }
+  ]
+}

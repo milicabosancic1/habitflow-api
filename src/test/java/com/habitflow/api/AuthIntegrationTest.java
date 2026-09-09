@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -195,6 +196,23 @@ class AuthIntegrationTest {
         mockMvc.perform(post("/api/auth/refresh")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json(Map.of("refreshToken", refreshToken))))
+                .andExpect(status().isUnauthorized());
+    }
+
+    // Regresija: bez custom AuthenticationEntryPoint-a, Spring Security default-uje
+    // na 403 za SVE auth greske. Klijenti (OkHttp Authenticator na Androidu) osluskuju
+    // iskljucivo 401 da bi pokusali refresh isteklog access tokena - 403 bi tiho
+    // blokirao ceo refresh mehanizam dok se korisnik rucno ne izloguje/uloguje.
+    @Test
+    void protectedEndpoint_withoutToken_returns401NotForbidden() throws Exception {
+        mockMvc.perform(get("/api/habits"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void protectedEndpoint_withInvalidToken_returns401NotForbidden() throws Exception {
+        mockMvc.perform(get("/api/habits")
+                        .header("Authorization", "Bearer ovo-nije-validan-jwt"))
                 .andExpect(status().isUnauthorized());
     }
 }

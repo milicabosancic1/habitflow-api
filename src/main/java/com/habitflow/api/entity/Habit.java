@@ -48,6 +48,15 @@ public class Habit {
     @Column(name = "stacked_after_habit_id", length = 36)
     private String stackedAfterHabitId;
 
+    @Column(length = 10)
+    private String color; // hex, npr. "#E8A87C" - kurirana paleta na Android strani
+
+    @Column(name = "weekly_target")
+    private Integer weeklyTarget; // samo za FrequencyType.TIMES_PER_WEEK
+
+    @Column(name = "replacement_text", length = 500)
+    private String replacementText; // samo za HabitType.QUIT - cime zamenjujes losu naviku
+
     @Column(name = "is_archived")
     private boolean archived;
 
@@ -100,6 +109,15 @@ public class Habit {
 
     public String getStackedAfterHabitId() { return stackedAfterHabitId; }
     public void setStackedAfterHabitId(String stackedAfterHabitId) { this.stackedAfterHabitId = stackedAfterHabitId; }
+
+    public String getColor() { return color; }
+    public void setColor(String color) { this.color = color; }
+
+    public Integer getWeeklyTarget() { return weeklyTarget; }
+    public void setWeeklyTarget(Integer weeklyTarget) { this.weeklyTarget = weeklyTarget; }
+
+    public String getReplacementText() { return replacementText; }
+    public void setReplacementText(String replacementText) { this.replacementText = replacementText; }
 
     public boolean isArchived() { return archived; }
     public void setArchived(boolean archived) { this.archived = archived; }

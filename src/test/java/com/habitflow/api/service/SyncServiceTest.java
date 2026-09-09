@@ -117,6 +117,35 @@ class SyncServiceTest {
     }
 
     @Test
+    void newHabitWithColorWeeklyTargetAndReplacementText_roundTripsThroughSync() {
+        // Regresija: Android salje color/weeklyTarget/replacementText na sync, ali dok
+        // backend nije znao za ova polja, tiho su se gubila na sledecem pull-u (server
+        // ih nikad ne bi upamtio pa bi ih vratio kao null i prepisao lokalnu vrednost).
+        when(habitRepository.findById("h4")).thenReturn(Optional.empty());
+
+        HabitDto incoming = new HabitDto();
+        incoming.setId("h4");
+        incoming.setName("Ne pusi");
+        incoming.setColor("#E8A87C");
+        incoming.setWeeklyTarget(3);
+        incoming.setReplacementText("Popij casu vode");
+        incoming.setUpdatedAt(100L);
+
+        SyncRequest req = new SyncRequest();
+        req.setSince(0L);
+        req.setHabits(List.of(incoming));
+        req.setEntries(List.of());
+
+        syncService.sync("user-1", req);
+
+        ArgumentCaptor<Habit> captor = ArgumentCaptor.forClass(Habit.class);
+        verify(habitRepository).save(captor.capture());
+        assertThat(captor.getValue().getColor()).isEqualTo("#E8A87C");
+        assertThat(captor.getValue().getWeeklyTarget()).isEqualTo(3);
+        assertThat(captor.getValue().getReplacementText()).isEqualTo("Popij casu vode");
+    }
+
+    @Test
     void updateWithoutTrackingType_keepsExistingValue() {
         Habit existing = new Habit();
         existing.setId("h3");

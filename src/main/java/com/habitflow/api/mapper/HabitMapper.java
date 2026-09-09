@@ -22,6 +22,9 @@ public class HabitMapper {
         d.setReminderTime(h.getReminderTime());
         d.setCueText(h.getCueText());
         d.setStackedAfterHabitId(h.getStackedAfterHabitId());
+        d.setColor(h.getColor());
+        d.setWeeklyTarget(h.getWeeklyTarget());
+        d.setReplacementText(h.getReplacementText());
         d.setArchived(h.isArchived());
         d.setCreatedAt(h.getCreatedAt());
         d.setUpdatedAt(h.getUpdatedAt());
@@ -43,6 +46,9 @@ public class HabitMapper {
         h.setReminderTime(d.getReminderTime());
         h.setCueText(d.getCueText());
         h.setStackedAfterHabitId(d.getStackedAfterHabitId());
+        h.setColor(d.getColor());
+        h.setWeeklyTarget(d.getWeeklyTarget());
+        h.setReplacementText(d.getReplacementText());
         h.setArchived(d.isArchived());
         if (d.getCreatedAt() != null) h.setCreatedAt(d.getCreatedAt());
         h.setUpdatedAt(d.getUpdatedAt());

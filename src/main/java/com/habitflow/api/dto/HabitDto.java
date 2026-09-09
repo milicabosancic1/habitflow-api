@@ -45,6 +45,13 @@ public class HabitDto {
 
     @Size(max = 36, message = "stackedAfterHabitId nije validan ID")
     private String stackedAfterHabitId;
+
+    @Size(max = 10, message = "color je predugačak")
+    private String color;
+    private Integer weeklyTarget;
+
+    @Size(max = 500, message = "replacementText je predugačak")
+    private String replacementText;
     private boolean archived;
     private Long createdAt;
     private Long updatedAt;
@@ -75,6 +82,12 @@ public class HabitDto {
     public void setCueText(String cueText) { this.cueText = cueText; }
     public String getStackedAfterHabitId() { return stackedAfterHabitId; }
     public void setStackedAfterHabitId(String stackedAfterHabitId) { this.stackedAfterHabitId = stackedAfterHabitId; }
+    public String getColor() { return color; }
+    public void setColor(String color) { this.color = color; }
+    public Integer getWeeklyTarget() { return weeklyTarget; }
+    public void setWeeklyTarget(Integer weeklyTarget) { this.weeklyTarget = weeklyTarget; }
+    public String getReplacementText() { return replacementText; }
+    public void setReplacementText(String replacementText) { this.replacementText = replacementText; }
     public boolean isArchived() { return archived; }
     public void setArchived(boolean archived) { this.archived = archived; }
     public Long getCreatedAt() { return createdAt; }
